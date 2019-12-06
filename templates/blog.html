@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<table><a href="/blog">Main Blog Page</a></table>
+<form action="/blog" method ="POST">
+<table><a href= "/newpost">Write a Post!</a></table>
+<form action="/newpost" method ="POST"></form>
+
+
+<center><h1>Build a Blog</h1></center>
+
+{% for i in blogs %}
+<table><a href= "/viewblog?id={{i.id}}">{{i.title}}</a></table>
+<form action="/viewblog" method ="GET"></form>
+<p>{{i.body}}</p>
+<p>_______________________________________________________________________________________________________________________________________________________________________</p>
+</form>
+{% endfor %}
+
+
+{% endblock %}
+
