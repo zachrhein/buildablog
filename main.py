@@ -22,7 +22,6 @@ class Blog(db.Model):
 def blog():
     if request.method == 'GET':
         blogs = Blog.query.all()
-
     return render_template('/blog.html', blogs=blogs)
 
 @app.route('/viewblog')
@@ -33,13 +32,24 @@ def viewblog():
 
 @app.route('/newpost', methods=['POST', 'GET'])
 def newpost():
-
+    titleerror=''
+    bodyerror=''   
     if request.method =='POST':
         blog_title = request.form['title']
         blog_body = request.form['body']
+        if blog_title == '' and blog_body == '':
+            titleerror = "You cannot leave this blank!"
+            bodyerror="You cannot leave this blank!" 
+            return render_template('newpost.html', bodyerror=bodyerror, titleerror=titleerror)
+        if blog_title == '':
+            titleerror = "You cannot leave this blank!"
+            return render_template('newpost.html', titleerror=titleerror)
+        if blog_body == '':
+            bodyerror="You cannot leave this blank!" 
+            return render_template('newpost.html', bodyerror=bodyerror)
         new_post = Blog(blog_title, blog_body)
         db.session.add(new_post)
-        db.session.commit()
+        db.session.commit() 
         return render_template('/viewblog.html', blog=new_post)
         
     
